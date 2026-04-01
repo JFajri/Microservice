@@ -11,13 +11,15 @@ import lombok.Data;
 public class Order {
   @Id
   @GeneratedValue(strategy=GenerationType.IDENTITY)
-  private Long id;
-  
-  private long id_produk;
-  private long id_pelanggan;
+    private Long id;
+    
+    private Long produkId; 
+    // private Long id_pelanggan;
 
-  private double harga;
-  private double jumlah;
-  private double total;
+    private String tanggal; 
+
+    // private double harga;
+    private Integer jumlah; 
+    private Double total;
 }
 
