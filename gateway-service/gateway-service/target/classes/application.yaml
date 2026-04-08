@@ -6,24 +6,19 @@ spring:
     name: gateway-service
   cloud:
     gateway:
-      server:
-        webmvc:
-          routes:
-            - id: PRODUK
-              uri: lb://PRODUK
-              predicates:
-                - Path=/produk/**
-            
-            - id: ORDER-SERVICE
-              uri: lb://ORDER
-              predicates:
-                - Path=/order/**
+      mvc: # Gunakan mvc: jika server: webmvc: tadi tidak jalan
+        routes:
+          - id: PRODUK
+            uri: lb://PRODUK
+            predicates:
+              - Path=/api/produk/**
+          
+          - id: ORDER-SERVICE
+            uri: lb://ORDER
+            predicates:
+              - Path=/api/order/**
 
 eureka:
   client:
-    register-with-eureka: true
-    fetch-registry: true
     service-url:
       defaultZone: http://localhost:8761/eureka/
-  instance:
-    hostname: localhost
