@@ -1,18 +1,19 @@
-import com.produser.produser.controller;
+package com.produser.produser;
 
-import org.springframework.beans.factory.annotation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ProduserController {
-    @Autowired
-    private ProdukService produserService;
+  @Autowired
+  private ProduserService produserService;
 
-    @GetMapping("/send")
-    public String sendMessage(@RequestParam String messsage){
-        produserService.sendMessage(messsage);
-        return "Message sent. " + messsage;
-    }
+  @PostMapping("/send")
+  public String sendMessage(@RequestParam String message) {
+    produserService.sendMessage(message);
+    return "Message sent: " + message;
+  }
 }
