@@ -10,16 +10,13 @@ import lombok.Data;
 @Entity(name = "orders")
 public class Order {
   @Id
-  @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
-    
-    private Long produkId; 
-    // private Long id_pelanggan;
-
-    private String tanggal; 
-
-    // private double harga;
-    private Integer jumlah; 
-    private Double total;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+  private Long produkId;
+  private Long pelangganId;
+  private double harga;
+  private int jumlah;
+  private double total;
+  private String tanggal;
+  private String status;
 }
-
