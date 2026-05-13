@@ -1,0 +1,8 @@
+com\security\auth\service\JwtService.class
+com\security\auth\controller\TestController.class
+com\security\auth\config\SecurityConfig.class
+com\security\auth\repository\UserRepository.class
+com\security\auth\config\JwtAuthenticationFilter.class
+com\security\auth\controller\AuthController.class
+com\security\auth\AuthApplication.class
+com\security\auth\entity\User.class
