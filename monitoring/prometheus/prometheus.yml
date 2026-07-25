@@ -1,0 +1,56 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets:
+          - cadvisor:8080
+
+  - job_name: 'eureka-server'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets:
+          - eureka-server:8761
+          
+  - job_name: 'auth-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets:
+          - auth-service:8090
+
+  - job_name: 'gateway-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets:
+          - gateway-service:9000
+
+  - job_name: 'produk-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets:
+          - produk-service:8081
+
+  - job_name: 'pelanggan-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets:
+          - pelanggan-service:8082
+
+  - job_name: 'order-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets:
+          - order-service:8083
+
+  - job_name: 'produser-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets:
+          - produser-service:8084
+
+  - job_name: 'consumer-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets:
+          - consumer-service:8085
