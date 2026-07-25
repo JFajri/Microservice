@@ -1,0 +1,36 @@
+server:
+  port: 9000
+
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.web: TRACE
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+
+  endpoint:
+    health:
+      show-details: always
+
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+spring:
+  application:
+    name: gateway-service
+
+# Route semuanya ke gatewayconfig.java
