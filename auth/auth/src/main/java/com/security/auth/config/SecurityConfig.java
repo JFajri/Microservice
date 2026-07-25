@@ -27,6 +27,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/v1/auth/**").permitAll()
                 .requestMatchers("/h2-console/**").permitAll() // <-- Tambahkan baris ini
+                .requestMatchers("/actuator/**").permitAll() // <-- Biar actuator nya juga bisa akses tanpa jwt
                 .anyRequest().authenticated()
             )
             // Tambahkan baris di bawah ini agar frame H2 bisa muncul

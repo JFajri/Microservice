@@ -14,6 +14,9 @@ import java.util.Map;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -21,6 +24,9 @@ public class AuthController {
     private final JwtService jwtService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder; // Tambahkan ini
+
+    private static final Logger log =
+        LoggerFactory.getLogger(AuthController.class);
 
     public AuthController(JwtService jwtService, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.jwtService = jwtService;
@@ -33,24 +39,31 @@ public class AuthController {
         String username = request.get("username");
         String password = request.get("password");
 
+        log.info("Mencoba login untuk username: {}", username);
+
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User tidak ditemukan"));
 
         // Verifikasi password menggunakan matches
         if (!passwordEncoder.matches(password, user.getPassword())) {
+            log.warn("Gagal login: Password salah untuk username: {}", username);
             return ResponseEntity.status(401).body(Map.of("message", "Password salah!"));
         }
 
         List<String> roles = Arrays.asList(user.getRoles().split(","));
         String token = jwtService.generateToken(user.getUsername(), roles);
         
+        log.info("Login berhasil untuk username: {}", username);
         return ResponseEntity.ok(Map.of("token", token));
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+        log.info("Mencoba registrasi user baru dengan username: {}", request.getUsername());
+
         // 1. Cek apakah username sudah dipakai
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
+            log.warn("Gagal registrasi: Username '{}' sudah terdaftar", request.getUsername());
             return ResponseEntity.badRequest().body(Map.of("message", "Username sudah terdaftar!"));
         }
 
@@ -68,6 +81,7 @@ public class AuthController {
         // 5. Simpan ke database
         userRepository.save(newUser);
 
+        log.info("Registrasi berhasil. User '{}' telah disimpan", request.getUsername());
         return ResponseEntity.ok(Map.of("message", "User berhasil didaftarkan!"));
     }
 
